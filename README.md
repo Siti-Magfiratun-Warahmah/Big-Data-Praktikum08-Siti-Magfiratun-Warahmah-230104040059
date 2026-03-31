@@ -1,59 +1,58 @@
-# PRAKTIKUM 4 – Streaming Processing & Real-Time Dashboard
+# PRAKTIKUM 5 – Big Data Analytics & Decision-Oriented System
 
 **Proyek:** BIGDATA-SPARK-230104040059
 
-Program ini dibuat untuk memenuhi instruksi **Praktikum 4 Mata Kuliah Teknologi Big Data**. Praktikum ini berfokus pada implementasi **Streaming Data Processing dan Real-Time Analytics Dashboard** menggunakan **Apache Spark Structured Streaming** dan **Streamlit**.
+Program ini dibuat untuk memenuhi instruksi **Praktikum 5 Mata Kuliah Teknologi Big Data**. Praktikum ini berfokus pada implementasi **Big Data Analytics berbasis streaming** serta pembangunan **Decision-Oriented System** menggunakan **Apache Spark Structured Streaming** dan **Streamlit**.
 
-Pipeline yang dibangun mensimulasikan sistem **streaming analytics seperti yang digunakan pada industri teknologi modern**, dimana data transaksi diproses secara real-time dan divisualisasikan melalui dashboard interaktif.
+Pipeline yang dibangun mensimulasikan sistem **Smart Transportation Analytics**, dimana data perjalanan diproses secara real-time untuk menghasilkan insight dan alert yang mendukung pengambilan keputusan.
 
 ---
 
 # 👩‍🎓 Identitas Mahasiswa
 
-| Keterangan | Informasi |
-|---|---|
-| Mata Kuliah | Teknologi Big Data |
-| Dosen Pengampu | Muhayat, S.Ag., M.IT |
-| Praktikum | Praktikum 4 – Streaming Processing & Real-Time Dashboard |
-| Nama Mahasiswa | Siti Magfiratun Warahmah |
-| NIM | 230104040059 |
-| Kelas | TI23B |
+| Keterangan     | Informasi                                   |
+| -------------- | ------------------------------------------- |
+| Mata Kuliah    | Teknologi Big Data                          |
+| Dosen Pengampu | Muhayat, S.Ag., M.IT                        |
+| Praktikum      | Praktikum 5 – Big Data Analytics & Use Case |
+| Nama Mahasiswa | Siti Magfiratun Warahmah                    |
+| NIM            | 230104040059                                |
+| Kelas          | TI23B                                       |
 
 ---
 
 # 🚀 Deskripsi Program
 
-Program ini merupakan implementasi **streaming data pipeline** yang digunakan untuk memproses data transaksi secara real-time.
+Program ini merupakan implementasi **streaming data pipeline berbasis Smart Transportation** yang digunakan untuk memproses data perjalanan secara real-time.
 
-Pada praktikum ini dilakukan simulasi **event streaming** menggunakan generator transaksi yang menghasilkan data transaksi secara berkala. Data tersebut kemudian diproses menggunakan **Spark Structured Streaming** dan disimpan dalam **Parquet Data Lake** sebelum ditampilkan pada dashboard analitik real-time.
+Pada praktikum ini dilakukan simulasi **event streaming** menggunakan trip generator yang menghasilkan data perjalanan secara berkala. Data tersebut kemudian diproses menggunakan **Spark Structured Streaming**, disimpan dalam **Parquet Data Lake**, dan dianalisis untuk menghasilkan insight serta alert secara otomatis.
 
-Pipeline streaming analytics yang dibangun terdiri dari beberapa komponen utama:
-
-✔ Transaction Generator untuk menghasilkan event transaksi  
-✔ Spark Structured Streaming untuk memproses data streaming  
-✔ Parquet Data Lake sebagai storage layer  
-✔ Streamlit Dashboard untuk visualisasi real-time  
-
-Dataset transaksi akan terus bertambah selama sistem berjalan dan dashboard akan menampilkan analitik secara otomatis setiap beberapa detik.
+Pipeline ini tidak hanya menampilkan data, tetapi juga membangun **Decision-Oriented System** yang mampu memberikan informasi penting secara real-time.
 
 ---
 
 # 🏗️ Arsitektur Pipeline
 
-Pipeline streaming analytics pada praktikum ini menggunakan arsitektur berikut:
+Pipeline Big Data Analytics pada praktikum ini menggunakan arsitektur berikut:
 
 ```
-Transaction Generator
+Trip Generator (JSON)
         │
         ▼
-stream_data/ (JSON events)
+stream_data/transportation
         │
         ▼
 Spark Structured Streaming
         │
         ▼
 Parquet Data Lake
-data/serving/stream
+data/serving/transportation
+        │
+        ▼
+Analytics Layer (Python)
+        │
+        ▼
+Alert System
         │
         ▼
 Real-Time Dashboard (Streamlit)
@@ -61,91 +60,79 @@ Real-Time Dashboard (Streamlit)
 
 Penjelasan alur data:
 
-1. **Transaction Generator** menghasilkan file JSON transaksi secara berkala.
-2. File transaksi disimpan pada folder **stream_data**.
-3. **Spark Structured Streaming** membaca file tersebut sebagai data streaming.
-4. Hasil pemrosesan streaming disimpan dalam format **Parquet** pada data lake.
-5. **Streamlit Dashboard** membaca data tersebut dan menampilkan analitik secara real-time.
+1. **Trip Generator** menghasilkan data perjalanan (trip) secara berkala dalam format JSON.
+2. Data disimpan pada folder **stream_data/transportation**.
+3. **Spark Structured Streaming** membaca data sebagai streaming.
+4. Data diproses dan disimpan dalam format **Parquet** pada data lake.
+5. **Analytics Layer** menghasilkan metrik dan insight.
+6. **Alert System** mendeteksi kondisi tertentu.
+7. **Dashboard** menampilkan visualisasi real-time.
 
 ---
 
 # 🛠️ Teknologi yang Digunakan
 
-Beberapa teknologi yang digunakan dalam implementasi pipeline ini antara lain:
+* Python 3.12
+* Apache Spark (PySpark)
+* Spark Structured Streaming
+* Parquet Data Lake
+* Streamlit
+* Pandas
+* Visual Studio Code
+* WSL Ubuntu
+* Bash CLI
 
-- Python 3.12
-- Apache Spark (PySpark)
-- Spark Structured Streaming
-- Parquet Data Lake
-- Streamlit
-- Pandas
-- Visual Studio Code
-- WSL Ubuntu
-- Bash CLI
-
-Teknologi ini digunakan untuk membangun sistem **real-time analytics pipeline** yang mampu memproses data streaming secara kontinu.
+Teknologi ini digunakan untuk membangun sistem **real-time analytics dan decision system** berbasis Big Data.
 
 ---
 
 # 📊 Dataset Streaming
 
-Dataset pada praktikum ini tidak berasal dari file statis, tetapi dihasilkan secara dinamis oleh **transaction generator**.
+Dataset tidak berasal dari file statis, tetapi dihasilkan secara dinamis oleh **trip generator**.
 
-Generator akan membuat file transaksi JSON secara berkala dengan struktur data seperti berikut:
+Contoh struktur data:
 
 ```
 {
-  "user_id": 120,
-  "product": "Laptop",
-  "price": 1500,
-  "city": "Jakarta",
-  "timestamp": "2026-03-12 10:22:10"
+  "trip_id": "TRX123",
+  "vehicle_type": "Car",
+  "location": "Jakarta",
+  "distance": 12.5,
+  "fare": 45000,
+  "timestamp": "2026-03-31 17:45:20"
 }
 ```
 
-File transaksi tersebut akan disimpan pada folder:
+Data disimpan pada folder:
 
 ```
-stream_data/
+stream_data/transportation
 ```
-
-Spark Structured Streaming kemudian membaca file tersebut sebagai **data streaming event**.
 
 ---
 
 # ⚙️ Cara Kerja Program
 
-Pipeline streaming analytics pada praktikum ini berjalan melalui beberapa tahapan utama.
+## 1️⃣ Trip Generator
+
+Script `trip_generator.py` menghasilkan data perjalanan secara berkala.
+
+Data berisi:
+
+* trip_id
+* vehicle_type
+* location
+* distance
+* fare
+* timestamp
 
 ---
 
-## 1️⃣ Transaction Generator
+## 2️⃣ Streaming Processing
 
-Program **transaction_generator.py** digunakan untuk mensimulasikan event streaming dengan menghasilkan file transaksi setiap beberapa detik.
+Script `streaming_trip_layer.py` membaca data streaming menggunakan Spark Structured Streaming.
 
-File transaksi akan disimpan pada folder:
-
-```
-stream_data/
-```
-
-Setiap transaksi berisi informasi:
-
-- user_id
-- product
-- price
-- city
-- timestamp
-
----
-
-## 2️⃣ Streaming Processing (Spark Structured Streaming)
-
-Script **streaming_layer.py** bertugas membaca file JSON dari folder stream_data sebagai data streaming.
-
-Spark Structured Streaming kemudian memproses data tersebut menggunakan konsep **micro-batch processing**.
-
-Konfigurasi streaming yang digunakan antara lain:
+Data diproses dengan konsep:
 
 ```
 readStream()
@@ -153,190 +140,133 @@ writeStream()
 trigger(processingTime="5 seconds")
 ```
 
-Data streaming yang telah diproses akan disimpan dalam format **Parquet** pada folder:
+Hasil disimpan dalam format Parquet pada:
 
 ```
-data/serving/stream
+data/serving/transportation
 ```
 
 ---
 
-## 3️⃣ Serving Layer (Parquet Data Lake)
+## 3️⃣ Analytics & Alert System
 
-Serving layer berfungsi sebagai penyimpanan data hasil pemrosesan streaming yang siap digunakan oleh aplikasi atau dashboard.
+Data yang telah diproses kemudian dianalisis untuk menghasilkan:
 
-Lokasi penyimpanan:
+* Total trips
+* Total fare
+* Top location
+* Peak hour
+* Mobility trend
+* Vehicle distribution
 
-```
-data/serving/stream
-```
+Sistem juga menghasilkan alert seperti:
 
-Folder ini akan berisi file Parquet seperti:
-
-```
-part-00000.snappy.parquet
-part-00001.snappy.parquet
-part-00002.snappy.parquet
-```
-
-File tersebut akan terus bertambah selama pipeline streaming berjalan.
+* High traffic volume
+* High fare detected
 
 ---
 
 ## 4️⃣ Real-Time Dashboard
 
-Dashboard analitik dibangun menggunakan **Streamlit**.
+Dashboard dibangun menggunakan **Streamlit**.
 
-Dashboard akan membaca data Parquet dari serving layer dan menampilkan berbagai metrik analitik secara real-time.
-
-Dashboard menampilkan beberapa komponen utama:
+Menampilkan:
 
 ### Key Metrics
 
-- Total Transactions
-- Total Revenue
-- Average Transaction
-- Cities
+* Total Trips
+* Total Fare
+* Top Location
+* Peak Hour
 
-### Visualisasi Grafik
+### Visualisasi
 
-- Revenue per City
-- Top Products
-- Revenue Trend
+* Fare per Location
+* Vehicle Distribution
+* Mobility Trend
 
-### Live Transactions
+### Data
 
-Dashboard juga menampilkan tabel transaksi terbaru yang masuk ke dalam sistem.
+* Live Trip Data
+* Abnormal Trips
 
-Data pada dashboard akan diperbarui secara otomatis setiap beberapa detik ketika data streaming baru diproses.
+Dashboard diperbarui secara otomatis secara real-time.
 
 ---
 
 # 📂 Struktur Folder Project
 
-Struktur project pada praktikum ini adalah sebagai berikut:
-
 ```
 BIGDATA-PROJECT
 │
-├── stream_data
+├── scripts/
+│   └── transportation/
 │
-├── data
-│   └── serving
-│       └── stream
+├── analytics/
 │
-├── scripts
-│   ├── streaming_layer.py
-│   └── transaction_generator.py
+├── alerts/
 │
-├── dashboard
-│   └── dashboard_streamlit.py
+├── dashboard/
 │
-├── logs
+├── data/
+│   └── serving/
+│       └── transportation/
 │
 └── README.md
 ```
-
-Penjelasan:
-
-- **stream_data** → folder penyimpanan event transaksi JSON  
-- **data/serving/stream** → hasil pemrosesan streaming dalam format Parquet  
-- **scripts** → script pipeline streaming  
-- **dashboard** → aplikasi dashboard Streamlit  
-
----
-
-# 📊 Real-Time Analytics
-
-Dashboard real-time menampilkan beberapa analitik penting dari transaksi yang masuk ke dalam sistem.
-
-Analitik yang ditampilkan meliputi:
-
-- Total jumlah transaksi
-- Total revenue
-- Average transaction value
-- Jumlah kota yang melakukan transaksi
-- Revenue berdasarkan kota
-- Produk yang paling banyak menghasilkan pendapatan
-- Tren revenue dari waktu ke waktu
-- Tabel transaksi terbaru
-
-Dashboard ini memungkinkan pengguna untuk **memantau aktivitas transaksi secara langsung** dan memperoleh insight bisnis secara cepat.
 
 ---
 
 # ▶️ Cara Menjalankan Program
 
-Pastikan semua dependency telah diinstall terlebih dahulu.
-
-Install library yang diperlukan:
+Install dependency:
 
 ```
 pip install pyspark streamlit pandas pyarrow
 ```
 
-Pipeline dijalankan menggunakan **3 terminal berbeda**.
-
----
+Jalankan pipeline menggunakan 3 terminal:
 
 ### Terminal 1 — Spark Streaming
 
-Menjalankan pipeline streaming Spark.
-
 ```
-spark-submit scripts/streaming_layer.py
+spark-submit scripts/transportation/streaming_trip_layer.py
 ```
 
----
-
-### Terminal 2 — Transaction Generator
-
-Menjalankan generator transaksi.
+### Terminal 2 — Trip Generator
 
 ```
-python scripts/transaction_generator.py
+python scripts/transportation/trip_generator.py
 ```
 
----
-
-### Terminal 3 — Streamlit Dashboard
-
-Menjalankan dashboard analitik real-time.
+### Terminal 3 — Dashboard
 
 ```
-python -m streamlit run dashboard/dashboard_streamlit.py
+streamlit run dashboard/dashboard_transportation.py
 ```
 
 ---
 
 # 🌐 Akses Dashboard
 
-Setelah dashboard dijalankan, buka browser dan akses alamat berikut:
+Buka di browser:
 
 ```
 http://localhost:8501
 ```
 
-Dashboard akan menampilkan **analitik transaksi secara real-time**.
-
 ---
 
 # 🎯 Kesimpulan
 
-Praktikum ini memperkenalkan konsep **stream processing dalam sistem Big Data** dengan membangun pipeline streaming analytics sederhana menggunakan Apache Spark Structured Streaming.
+Praktikum ini mengimplementasikan sistem **Big Data Analytics berbasis streaming** yang mampu memproses data perjalanan secara real-time menggunakan Spark Structured Streaming.
 
-Data transaksi dihasilkan secara kontinu oleh transaction generator dan diproses secara real-time oleh Spark sebelum disimpan dalam format Parquet pada data lake. Data tersebut kemudian divisualisasikan menggunakan dashboard Streamlit yang menampilkan berbagai metrik analitik seperti total transaksi, revenue per city, top products, dan revenue trend.
-
-Melalui praktikum ini dapat dipahami bagaimana sistem Big Data modern memproses data streaming dan menyajikan analitik secara real-time untuk mendukung proses pengambilan keputusan berbasis data.
+Data yang dihasilkan oleh trip generator diproses, disimpan dalam Parquet Data Lake, dan dianalisis untuk menghasilkan insight serta alert. Dashboard Streamlit menampilkan informasi tersebut secara real-time sehingga sistem tidak hanya berfungsi sebagai visualisasi, tetapi juga sebagai **Decision-Oriented System** yang mendukung pengambilan keputusan berbasis data.
 
 ---
 
 # 📦 Repository
 
-Source code praktikum ini tersedia pada repository GitHub berikut:
-
 ```
-https://github.com/Siti-Magfiratun-Warahmah/Big-Data-Praktikum04-Siti-Magfiratun-Warahmah-230104040059
+https://github.com/Siti-Magfiratun-Warahmah/Big-Data-Praktikum05-Siti-Magfiratun-Warahmah-230104040059
 ```
-
----
