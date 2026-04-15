@@ -1,176 +1,151 @@
-# PRAKTIKUM 6 – Real-Time Analytics & Visualisasi Data Skala Besar
+# PRAKTIKUM 7 – Machine Learning untuk Prediksi Traffic (Smart City AI)
 
 **Proyek:** BIGDATA-SPARK-230104040059
 
-Program ini dibuat untuk memenuhi instruksi **Praktikum 6 Mata Kuliah Teknologi Big Data**. Praktikum ini berfokus pada pengembangan **visualisasi data real-time dalam skala besar (large-scale visualization)** serta optimasi dashboard menggunakan teknik seperti window aggregation, downsampling, dan incremental visualization.
+Program ini dibuat untuk memenuhi instruksi **Praktikum 7 Mata Kuliah Teknologi Big Data**. Praktikum ini berfokus pada penerapan **Machine Learning untuk prediksi traffic** menggunakan data time series serta pembangunan dashboard interaktif berbasis Streamlit.
 
-Pipeline yang dibangun merupakan pengembangan dari praktikum sebelumnya, dengan fokus pada peningkatan performa visualisasi dan kemampuan sistem dalam menangani data streaming dalam jumlah besar.
+Pipeline yang dibangun merupakan pengembangan dari praktikum sebelumnya, dengan fokus pada integrasi data, pemodelan Machine Learning, serta visualisasi hasil prediksi dalam konteks Smart City.
 
 ---
 
 # 👩‍🎓 Identitas Mahasiswa
 
-| Keterangan     | Informasi                                            |
-| -------------- | ---------------------------------------------------- |
-| Mata Kuliah    | Teknologi Big Data                                   |
-| Dosen Pengampu | Muhayat, S.Ag., M.IT                                 |
-| Praktikum      | Praktikum 6 – Real-Time Analytics & Visualisasi Data |
-| Nama Mahasiswa | Siti Magfiratun Warahmah                             |
-| NIM            | 230104040059                                         |
-| Kelas          | TI23B                                                |
+| Keterangan     | Informasi                              |
+| -------------- | -------------------------------------- |
+| Mata Kuliah    | Teknologi Big Data                     |
+| Dosen Pengampu | Muhayat, S.Ag., M.IT                   |
+| Praktikum      | Praktikum 7 – Machine Learning Traffic |
+| Nama Mahasiswa | Siti Magfiratun Warahmah               |
+| NIM            | 230104040059                           |
+| Kelas          | TI23B                                  |
 
 ---
 
 # 🚀 Deskripsi Program
 
-Program ini merupakan implementasi sistem **Real-Time Analytics berbasis Big Data** pada domain Smart Transportation. Sistem ini mampu memproses data perjalanan secara streaming dan menampilkannya dalam bentuk dashboard interaktif secara real-time.
+Program ini merupakan implementasi sistem **Machine Learning untuk prediksi traffic** dalam konteks Smart City. Sistem ini memanfaatkan data historis berbasis waktu (time series) untuk memprediksi jumlah kendaraan pada waktu tertentu.
 
-Fokus utama pada praktikum ini adalah bagaimana menangani **data dalam skala besar** agar tetap dapat divisualisasikan dengan cepat dan responsif. Oleh karena itu, diterapkan berbagai teknik optimasi seperti window aggregation, downsampling, dan incremental visualization.
+Proses dimulai dari data mentah yang kemudian dibersihkan, dilanjutkan dengan pembuatan fitur (feature engineering), pelatihan model Machine Learning menggunakan algoritma Random Forest, hingga penyajian hasil dalam bentuk dashboard interaktif.
 
-Sistem ini tidak hanya menampilkan data, tetapi juga menghasilkan insight secara langsung sehingga dapat digunakan sebagai **Decision-Oriented System**.
+Sistem ini tidak hanya menampilkan data, tetapi juga mampu memberikan prediksi yang dapat digunakan sebagai dasar pengambilan keputusan dalam pengelolaan lalu lintas.
 
 ---
 
 # 🏗️ Arsitektur Pipeline
 
-Pipeline Big Data Analytics pada praktikum ini menggunakan arsitektur berikut:
+Pipeline Machine Learning pada praktikum ini menggunakan alur berikut:
 
 ```
-Trip Generator (JSON)
-        │
-        ▼
-stream_data/transportation
-        │
-        ▼
-Spark Structured Streaming
-        │
-        ▼
-Parquet Data Lake (Serving Layer)
-        │
-        ▼
-Aggregation Layer (Windowing)
-        │
-        ▼
-Visualization Engine (Streamlit)
-        │
-        ▼
-Interactive Dashboard (Real-Time & Large Scale)
+Data Raw
+   │
+   ▼
+Data Clean
+   │
+   ▼
+Feature Engineering
+   │
+   ▼
+Model Training (Random Forest)
+   │
+   ▼
+Dashboard (Streamlit)
+   │
+   ▼
+Insight & Prediction
 ```
 
 Penjelasan alur data:
 
-1. **Trip Generator** menghasilkan data perjalanan secara berkala dalam format JSON.
-2. Data dibaca oleh **Spark Structured Streaming** sebagai data streaming.
-3. Data diproses secara real-time dan disimpan dalam format **Parquet**.
-4. Data kemudian melalui proses **window aggregation** untuk penyederhanaan.
-5. Hasil agregasi divisualisasikan menggunakan **Streamlit**.
-6. Dashboard menampilkan data secara real-time dan tetap responsif.
+1. **Data Raw** berupa dataset traffic yang berisi informasi waktu dan jumlah kendaraan.
+2. **Data Cleaning** dilakukan untuk mengubah format datetime, mengurutkan data, dan menghapus nilai kosong.
+3. **Feature Engineering** menambahkan fitur penting seperti jam, hari, dan traffic sebelumnya (lag).
+4. **Model Training** menggunakan Random Forest Regressor untuk mempelajari pola data.
+5. **Dashboard** menampilkan visualisasi dan hasil prediksi secara interaktif.
+6. **Insight & Prediction** digunakan untuk memahami pola traffic dan melakukan estimasi kondisi di masa depan.
 
 ---
 
 # 🛠️ Teknologi yang Digunakan
 
-* Python 3.12
-* Apache Spark (PySpark)
-* Spark Structured Streaming
-* Parquet Data Lake
-* Streamlit
+* Python 3
 * Pandas
+* Scikit-learn (Random Forest)
+* Joblib
+* Matplotlib
+* Streamlit
 * Visual Studio Code
-* WSL Ubuntu
+* WSL (Linux)
 * Bash CLI
 
 ---
 
-# 📊 Dataset Streaming
+# 📊 Dataset
 
-Dataset dihasilkan secara dinamis oleh **trip generator**.
-
-Contoh data:
+Dataset yang digunakan adalah:
 
 ```
-{
-  "trip_id": "TRX123",
-  "vehicle_type": "Car",
-  "location": "Jakarta",
-  "distance": 12.5,
-  "fare": 45000,
-  "timestamp": "2026-03-31 17:45:20"
-}
+traffic_smartcity_v1.csv
 ```
+
+Dataset ini berisi data traffic berbasis waktu yang digunakan untuk proses analisis dan prediksi.
 
 ---
 
 # ⚙️ Cara Kerja Program
 
-## 1️⃣ Trip Generator
+## 1️⃣ Data Cleaning
 
-Menghasilkan data perjalanan secara kontinu dalam format JSON.
+Melakukan pembersihan data dengan:
 
----
+* Mengubah kolom datetime ke format waktu
+* Mengurutkan data berdasarkan waktu
+* Menghapus data kosong
 
-## 2️⃣ Streaming Processing
-
-Menggunakan Spark Structured Streaming untuk membaca dan memproses data secara real-time.
-
----
-
-## 3️⃣ Aggregation Layer
-
-Menggunakan teknik **window aggregation** untuk mengelompokkan data berdasarkan waktu agar lebih ringan untuk divisualisasikan.
+Output disimpan pada folder `data/clean`.
 
 ---
 
-## 4️⃣ Dashboard & Visualisasi
+## 2️⃣ Feature Engineering & Modeling
+
+Menambahkan fitur:
+
+* Hour (jam)
+* Day (hari)
+* Lag1 (traffic sebelumnya)
+
+Kemudian model dilatih menggunakan Random Forest dan disimpan dalam bentuk file `.pkl`.
+
+---
+
+## 3️⃣ Dashboard & Prediksi
 
 Dashboard dibangun menggunakan Streamlit dan menampilkan:
 
 ### Visualisasi
 
-* Real-Time Traffic (Windowed)
-* Vehicle Distribution
-* Mobility Trend
-* Fare per Location
+* Grafik traffic (trend)
+* Statistik rata-rata dan maksimum traffic
 
-### Data
+### Prediksi
 
-* Live Trip Data (terbatas)
-
-Dashboard diperbarui secara otomatis secara real-time.
-
----
-
-# ⚡ Optimasi Sistem
-
-Untuk menjaga performa pada data skala besar, digunakan:
-
-* Window Aggregation
-* Downsampling
-* Incremental Visualization
-* Pembatasan data (tail data)
-* Pengaturan refresh interval
-
-Teknik ini membuat dashboard tetap cepat, ringan, dan tidak lag.
+* Input: jam, hari, traffic sebelumnya
+* Output: jumlah kendaraan (prediksi)
 
 ---
 
 # 📂 Struktur Folder Project
 
 ```
-BIGDATA-PROJECT
-│
-├── scripts/
-│   └── transportation/
-│
-├── analytics/
-│
-├── alerts/
-│
-├── dashboard/
+bigdata-project
 │
 ├── data/
-│   └── serving/
-│       └── transportation/
+│   ├── raw/
+│   └── clean/
+│
+├── scripts/
+├── analytics/
+├── models/
+├── dashboard/
 │
 └── README.md
 ```
@@ -179,30 +154,36 @@ BIGDATA-PROJECT
 
 # ▶️ Cara Menjalankan Program
 
+Aktifkan virtual environment:
+
+```
+source venv/bin/activate
+```
+
 Install dependency:
 
 ```
-pip install pyspark streamlit pandas pyarrow
+pip install pandas scikit-learn matplotlib streamlit joblib
 ```
 
-Jalankan 3 terminal:
+Jalankan program:
 
-### Terminal 1 — Spark Streaming
-
-```
-spark-submit scripts/transportation/streaming_trip_layer.py
-```
-
-### Terminal 2 — Trip Generator
+### 1. Data Cleaning
 
 ```
-python scripts/transportation/trip_generator.py
+python scripts/traffic_data_cleaning_v1.py
 ```
 
-### Terminal 3 — Dashboard
+### 2. Modeling
 
 ```
-streamlit run dashboard/dashboard_transportation.py
+python analytics/traffic_ml_model_v1.py
+```
+
+### 3. Dashboard
+
+```
+streamlit run dashboard/traffic_dashboard_v1.py
 ```
 
 ---
@@ -219,12 +200,12 @@ http://localhost:8501
 
 # 🎯 Kesimpulan
 
-Praktikum ini berhasil mengimplementasikan sistem **Real-Time Analytics dan Visualisasi Data Skala Besar** menggunakan Spark Structured Streaming dan Streamlit. Dengan penerapan teknik optimasi seperti window aggregation dan downsampling, sistem mampu menampilkan data secara real-time dengan performa yang tetap stabil. Sistem ini juga berperan sebagai decision-oriented system yang dapat mendukung pengambilan keputusan berbasis data.
+Praktikum ini berhasil mengimplementasikan sistem Machine Learning untuk prediksi traffic dengan memanfaatkan data historis dan fitur sederhana seperti jam, hari, dan traffic sebelumnya. Pipeline yang dibangun berjalan secara terstruktur mulai dari data cleaning hingga visualisasi dashboard, serta mampu menghasilkan prediksi yang dapat digunakan untuk memahami pola lalu lintas dan mendukung pengambilan keputusan dalam Smart City.
 
 ---
 
 # 📦 Repository
 
 ```
-https://github.com/Siti-Magfiratun-Warahmah/Big-Data-Praktikum06-Siti-Magfiratun-Warahmah-230104040059
+https://github.com/Siti-Magfiratun-Warahmah/Big-Data-Praktikum07-Siti-Magfiratun-Warahmah-230104040059
 ```
