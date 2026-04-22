@@ -1,135 +1,97 @@
-# PRAKTIKUM 7 – Machine Learning untuk Prediksi Traffic (Smart City AI)
+# PRAKTIKUM 8 – Real-Time Fraud Detection (Kafka + Spark + Streamlit)
 
 **Proyek:** BIGDATA-SPARK-230104040059
 
-Program ini dibuat untuk memenuhi instruksi **Praktikum 7 Mata Kuliah Teknologi Big Data**. Praktikum ini berfokus pada penerapan **Machine Learning untuk prediksi traffic** menggunakan data time series serta pembangunan dashboard interaktif berbasis Streamlit.
+Program ini dibuat untuk memenuhi instruksi **Praktikum 8 Mata Kuliah Teknologi Big Data**. Praktikum ini berfokus pada pembangunan sistem **Real-Time Fraud Detection** menggunakan Apache Kafka, Apache Spark Structured Streaming, serta visualisasi dashboard dengan Streamlit.
 
-Pipeline yang dibangun merupakan pengembangan dari praktikum sebelumnya, dengan fokus pada integrasi data, pemodelan Machine Learning, serta visualisasi hasil prediksi dalam konteks Smart City.
+Pipeline yang dibangun merupakan pengembangan dari praktikum sebelumnya, dengan fokus pada **real-time processing, keamanan data, serta integrasi sistem end-to-end** dalam konteks industri perbankan modern.
 
 ---
 
 # 👩‍🎓 Identitas Mahasiswa
 
-| Keterangan     | Informasi                              |
-| -------------- | -------------------------------------- |
-| Mata Kuliah    | Teknologi Big Data                     |
-| Dosen Pengampu | Muhayat, S.Ag., M.IT                   |
-| Praktikum      | Praktikum 7 – Machine Learning Traffic |
-| Nama Mahasiswa | Siti Magfiratun Warahmah               |
-| NIM            | 230104040059                           |
-| Kelas          | TI23B                                  |
+| Keterangan     | Informasi                               |
+| -------------- | --------------------------------------- |
+| Mata Kuliah    | Teknologi Big Data                      |
+| Dosen Pengampu | Muhayat, S.Ag., M.IT                    |
+| Praktikum      | Praktikum 8 – Real-Time Fraud Detection |
+| Nama Mahasiswa | Siti Magfiratun Warahmah                |
+| NIM            | 230104040059                            |
+| Kelas          | TI23B                                   |
 
 ---
 
 # 🚀 Deskripsi Program
 
-Program ini merupakan implementasi sistem **Machine Learning untuk prediksi traffic** dalam konteks Smart City. Sistem ini memanfaatkan data historis berbasis waktu (time series) untuk memprediksi jumlah kendaraan pada waktu tertentu.
+Program ini merupakan implementasi sistem **deteksi fraud transaksi bank secara real-time** menggunakan arsitektur Big Data modern.
 
-Proses dimulai dari data mentah yang kemudian dibersihkan, dilanjutkan dengan pembuatan fitur (feature engineering), pelatihan model Machine Learning menggunakan algoritma Random Forest, hingga penyajian hasil dalam bentuk dashboard interaktif.
+Sistem bekerja dengan cara:
 
-Sistem ini tidak hanya menampilkan data, tetapi juga mampu memberikan prediksi yang dapat digunakan sebagai dasar pengambilan keputusan dalam pengelolaan lalu lintas.
+* Mengirim data transaksi secara streaming menggunakan Kafka
+* Memproses data secara real-time menggunakan Spark Structured Streaming
+* Menerapkan **data masking dan enkripsi** untuk keamanan
+* Mengklasifikasikan transaksi sebagai **FRAUD atau NORMAL**
+* Menampilkan hasil dalam dashboard interaktif
+
+Sistem ini mencerminkan implementasi nyata pada industri perbankan yang membutuhkan **kecepatan, keamanan, dan skalabilitas tinggi**.
 
 ---
 
 # 🏗️ Arsitektur Pipeline
 
-Pipeline Machine Learning pada praktikum ini menggunakan alur berikut:
-
 ```
-Data Raw
+Kafka (Producer)
    │
    ▼
-Data Clean
+Spark Streaming (Processing)
    │
    ▼
-Feature Engineering
+Secure Processing (Masking + Encryption + Fraud Detection)
    │
    ▼
-Model Training (Random Forest)
+Storage (Parquet)
    │
    ▼
 Dashboard (Streamlit)
-   │
-   ▼
-Insight & Prediction
 ```
 
-Penjelasan alur data:
+Penjelasan alur:
 
-1. **Data Raw** berupa dataset traffic yang berisi informasi waktu dan jumlah kendaraan.
-2. **Data Cleaning** dilakukan untuk mengubah format datetime, mengurutkan data, dan menghapus nilai kosong.
-3. **Feature Engineering** menambahkan fitur penting seperti jam, hari, dan traffic sebelumnya (lag).
-4. **Model Training** menggunakan Random Forest Regressor untuk mempelajari pola data.
-5. **Dashboard** menampilkan visualisasi dan hasil prediksi secara interaktif.
-6. **Insight & Prediction** digunakan untuk memahami pola traffic dan melakukan estimasi kondisi di masa depan.
+1. **Kafka Producer** mengirim data transaksi secara real-time.
+2. **Spark Streaming** membaca data dari Kafka.
+3. Data diproses dengan:
+
+   * Masking data rekening
+   * Enkripsi jumlah transaksi
+   * Deteksi fraud berbasis rule
+4. Data disimpan dalam format **Parquet**.
+5. Dashboard menampilkan hasil secara real-time.
+
+---
+
+# 🔐 Konsep Keamanan yang Digunakan
+
+* **Data Masking** → Menyembunyikan nomor rekening
+* **Encryption (Base64)** → Mengamankan nilai transaksi
+* **Logging** → Monitoring aktivitas sistem
+* **Fraud Detection Rule-Based**:
+
+  * Jumlah > 50.000.000 → FRAUD
+  * Lokasi luar negeri → FRAUD
 
 ---
 
 # 🛠️ Teknologi yang Digunakan
 
 * Python 3
+* Apache Kafka
+* Apache Spark (PySpark)
 * Pandas
-* Scikit-learn (Random Forest)
-* Joblib
-* Matplotlib
 * Streamlit
-* Visual Studio Code
+* Java (OpenJDK 11)
 * WSL (Linux)
 * Bash CLI
-
----
-
-# 📊 Dataset
-
-Dataset yang digunakan adalah:
-
-```
-traffic_smartcity_v1.csv
-```
-
-Dataset ini berisi data traffic berbasis waktu yang digunakan untuk proses analisis dan prediksi.
-
----
-
-# ⚙️ Cara Kerja Program
-
-## 1️⃣ Data Cleaning
-
-Melakukan pembersihan data dengan:
-
-* Mengubah kolom datetime ke format waktu
-* Mengurutkan data berdasarkan waktu
-* Menghapus data kosong
-
-Output disimpan pada folder `data/clean`.
-
----
-
-## 2️⃣ Feature Engineering & Modeling
-
-Menambahkan fitur:
-
-* Hour (jam)
-* Day (hari)
-* Lag1 (traffic sebelumnya)
-
-Kemudian model dilatih menggunakan Random Forest dan disimpan dalam bentuk file `.pkl`.
-
----
-
-## 3️⃣ Dashboard & Prediksi
-
-Dashboard dibangun menggunakan Streamlit dan menampilkan:
-
-### Visualisasi
-
-* Grafik traffic (trend)
-* Statistik rata-rata dan maksimum traffic
-
-### Prediksi
-
-* Input: jam, hari, traffic sebelumnya
-* Output: jumlah kendaraan (prediksi)
+* VS Code
 
 ---
 
@@ -138,52 +100,85 @@ Dashboard dibangun menggunakan Streamlit dan menampilkan:
 ```
 bigdata-project
 │
-├── data/
-│   ├── raw/
-│   └── clean/
-│
 ├── scripts/
-├── analytics/
-├── models/
+│   ├── kafka_producer_bank.py
+│   ├── spark_streaming_fraud_v2.py
+│
 ├── dashboard/
+│   └── fraud_dashboard_v2.py
+│
+├── stream_data/
+│   └── realtime_output/
+│
+├── data/
+│   └── checkpoints/
+│
+├── logs/
+│   └── fraud_realtime.log
 │
 └── README.md
 ```
 
 ---
 
-# ▶️ Cara Menjalankan Program
+# ⚙️ Cara Menjalankan Program
 
-Aktifkan virtual environment:
+## 1️⃣ Aktifkan Virtual Environment
 
 ```
 source venv/bin/activate
 ```
 
-Install dependency:
+---
+
+## 2️⃣ Jalankan Kafka
+
+### Terminal 1 (Zookeeper)
 
 ```
-pip install pandas scikit-learn matplotlib streamlit joblib
+cd kafka_2.13-3.5.1
+bin/zookeeper-server-start.sh config/zookeeper.properties
 ```
 
-Jalankan program:
-
-### 1. Data Cleaning
+### Terminal 2 (Kafka Server)
 
 ```
-python scripts/traffic_data_cleaning_v1.py
+cd kafka_2.13-3.5.1
+bin/kafka-server-start.sh config/server.properties
 ```
 
-### 2. Modeling
+### Terminal 3 (Create Topic)
 
 ```
-python analytics/traffic_ml_model_v1.py
+bin/kafka-topics.sh --create \
+--topic bank_topic \
+--bootstrap-server localhost:9092 \
+--partitions 1 \
+--replication-factor 1
 ```
 
-### 3. Dashboard
+---
+
+## 3️⃣ Jalankan Sistem
+
+### Terminal 1 (Producer)
 
 ```
-streamlit run dashboard/traffic_dashboard_v1.py
+python3 scripts/kafka_producer_bank.py
+```
+
+### Terminal 2 (Spark Streaming)
+
+```
+spark-submit \
+--packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.1 \
+scripts/spark_streaming_fraud_v2.py
+```
+
+### Terminal 3 (Dashboard)
+
+```
+streamlit run dashboard/fraud_dashboard_v2.py
 ```
 
 ---
@@ -198,14 +193,51 @@ http://localhost:8501
 
 ---
 
+# 📊 Output Sistem
+
+Sistem menghasilkan:
+
+* Data transaksi real-time
+* Status fraud (FRAUD / NORMAL)
+* File output dalam format Parquet
+* Dashboard visualisasi:
+
+  * Total transaksi
+  * Total fraud
+  * Tabel data
+  * Grafik distribusi
+
+---
+
+# 📸 Output Wajib
+
+* Script Python
+* Folder `stream_data/realtime_output`
+* Screenshot:
+
+  * Kafka berjalan
+  * Spark berjalan
+  * Dashboard tampil
+
+---
+
 # 🎯 Kesimpulan
 
-Praktikum ini berhasil mengimplementasikan sistem Machine Learning untuk prediksi traffic dengan memanfaatkan data historis dan fitur sederhana seperti jam, hari, dan traffic sebelumnya. Pipeline yang dibangun berjalan secara terstruktur mulai dari data cleaning hingga visualisasi dashboard, serta mampu menghasilkan prediksi yang dapat digunakan untuk memahami pola lalu lintas dan mendukung pengambilan keputusan dalam Smart City.
+Praktikum ini berhasil mengimplementasikan sistem **Real-Time Fraud Detection** berbasis Big Data dengan memanfaatkan Kafka, Spark, dan Streamlit.
+
+Pipeline yang dibangun mampu:
+
+* Mengolah data secara real-time
+* Mengamankan data sensitif melalui masking dan enkripsi
+* Mendeteksi fraud secara cepat
+* Menampilkan hasil secara interaktif
+
+Sistem ini menunjukkan bahwa dalam Big Data, **kecepatan dan keamanan merupakan dua aspek utama yang tidak dapat dipisahkan**.
 
 ---
 
 # 📦 Repository
 
 ```
-https://github.com/Siti-Magfiratun-Warahmah/Big-Data-Praktikum07-Siti-Magfiratun-Warahmah-230104040059
+https://github.com/Siti-Magfiratun-Warahmah/Big-Data-Praktikum08-Siti-Magfiratun-Warahmah-230104040059
 ```
