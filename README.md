@@ -1,96 +1,76 @@
-# PRAKTIKUM 8 – Real-Time Fraud Detection (Kafka + Spark + Streamlit)
+# PRAKTIKUM 9 – Smart City Traffic Monitoring & Prediction (Spark + Parquet + Streamlit)
 
-**Proyek:** BIGDATA-SPARK-230104040059
+**Proyek:** BIGDATA-PRAKTIKUM09-230104040059
 
-Program ini dibuat untuk memenuhi instruksi **Praktikum 8 Mata Kuliah Teknologi Big Data**. Praktikum ini berfokus pada pembangunan sistem **Real-Time Fraud Detection** menggunakan Apache Kafka, Apache Spark Structured Streaming, serta visualisasi dashboard dengan Streamlit.
+Program ini dibuat untuk memenuhi instruksi **Praktikum 9 Mata Kuliah Teknologi Big Data**. Praktikum ini berfokus pada pembangunan sistem **monitoring dan prediksi kepadatan kendaraan** menggunakan Apache Spark (PySpark), penyimpanan Parquet, serta visualisasi dashboard interaktif dengan Streamlit.
 
-Pipeline yang dibangun merupakan pengembangan dari praktikum sebelumnya, dengan fokus pada **real-time processing, keamanan data, serta integrasi sistem end-to-end** dalam konteks industri perbankan modern.
+Sistem ini merupakan pengembangan dari praktikum sebelumnya dengan fokus pada **batch processing, analisis data, serta prediksi berbasis Machine Learning**.
 
 ---
 
 # 👩‍🎓 Identitas Mahasiswa
 
-| Keterangan     | Informasi                               |
-| -------------- | --------------------------------------- |
-| Mata Kuliah    | Teknologi Big Data                      |
-| Dosen Pengampu | Muhayat, S.Ag., M.IT                    |
-| Praktikum      | Praktikum 8 – Real-Time Fraud Detection |
-| Nama Mahasiswa | Siti Magfiratun Warahmah                |
-| NIM            | 230104040059                            |
-| Kelas          | TI23B                                   |
+| Keterangan     | Informasi                        |
+| -------------- | -------------------------------- |
+| Mata Kuliah    | Teknologi Big Data               |
+| Dosen Pengampu | Muhayat, S.Ag., M.IT             |
+| Praktikum      | Praktikum 9 – Traffic Monitoring |
+| Nama Mahasiswa | Siti Magfiratun Warahmah         |
+| NIM            | 230104040059                     |
+| Kelas          | TI23B                            |
 
 ---
 
 # 🚀 Deskripsi Program
 
-Program ini merupakan implementasi sistem **deteksi fraud transaksi bank secara real-time** menggunakan arsitektur Big Data modern.
+Program ini merupakan implementasi sistem **monitoring dan prediksi kepadatan kendaraan** berbasis Big Data.
 
 Sistem bekerja dengan cara:
 
-* Mengirim data transaksi secara streaming menggunakan Kafka
-* Memproses data secara real-time menggunakan Spark Structured Streaming
-* Menerapkan **data masking dan enkripsi** untuk keamanan
-* Mengklasifikasikan transaksi sebagai **FRAUD atau NORMAL**
-* Menampilkan hasil dalam dashboard interaktif
+* Menghasilkan data simulasi kendaraan (timestamp, lokasi, jumlah kendaraan)
+* Memproses data menggunakan Apache Spark
+* Melakukan agregasi berdasarkan lokasi dan waktu
+* Menyimpan data dalam format **Parquet**
+* Menampilkan data dalam dashboard interaktif menggunakan Streamlit
+* Melakukan prediksi jumlah kendaraan menggunakan **Linear Regression**
 
-Sistem ini mencerminkan implementasi nyata pada industri perbankan yang membutuhkan **kecepatan, keamanan, dan skalabilitas tinggi**.
+Sistem ini menggambarkan konsep **Smart City** dalam pengelolaan lalu lintas berbasis data.
 
 ---
 
 # 🏗️ Arsitektur Pipeline
 
 ```
-Kafka (Producer)
-   │
-   ▼
-Spark Streaming (Processing)
-   │
-   ▼
-Secure Processing (Masking + Encryption + Fraud Detection)
-   │
-   ▼
-Storage (Parquet)
-   │
-   ▼
-Dashboard (Streamlit)
+Data Generation
+   ↓
+Spark Transformation
+   ↓
+Parquet Columnar Storage
+   ↓
+ML Modeling (Linear Regression)
+   ↓
+Serving (Streamlit Dashboard)
 ```
 
 Penjelasan alur:
 
-1. **Kafka Producer** mengirim data transaksi secara real-time.
-2. **Spark Streaming** membaca data dari Kafka.
-3. Data diproses dengan:
-
-   * Masking data rekening
-   * Enkripsi jumlah transaksi
-   * Deteksi fraud berbasis rule
-4. Data disimpan dalam format **Parquet**.
-5. Dashboard menampilkan hasil secara real-time.
-
----
-
-# 🔐 Konsep Keamanan yang Digunakan
-
-* **Data Masking** → Menyembunyikan nomor rekening
-* **Encryption (Base64)** → Mengamankan nilai transaksi
-* **Logging** → Monitoring aktivitas sistem
-* **Fraud Detection Rule-Based**:
-
-  * Jumlah > 50.000.000 → FRAUD
-  * Lokasi luar negeri → FRAUD
+1. Data kendaraan dibuat secara simulasi.
+2. Spark digunakan untuk melakukan transformasi dan agregasi data.
+3. Data disimpan dalam format **Parquet** untuk efisiensi.
+4. Model Machine Learning digunakan untuk prediksi jumlah kendaraan.
+5. Dashboard menampilkan data dan hasil prediksi secara interaktif.
 
 ---
 
 # 🛠️ Teknologi yang Digunakan
 
 * Python 3
-* Apache Kafka
 * Apache Spark (PySpark)
 * Pandas
 * Streamlit
-* Java (OpenJDK 11)
+* Plotly
+* Scikit-learn (Linear Regression)
 * WSL (Linux)
-* Bash CLI
 * VS Code
 
 ---
@@ -98,24 +78,17 @@ Penjelasan alur:
 # 📂 Struktur Folder Project
 
 ```
-bigdata-project
+bigdata-praktikum09-230104040059
 │
-├── scripts/
-│   ├── kafka_producer_bank.py
-│   ├── spark_streaming_fraud_v2.py
+├── main_uts_230104040059.py
+├── dashboard_230104040059.py
+├── output/
+│   ├── traffic/
+│   ├── traffic_time/
+│   └── ml_data/
 │
-├── dashboard/
-│   └── fraud_dashboard_v2.py
-│
-├── stream_data/
-│   └── realtime_output/
-│
-├── data/
-│   └── checkpoints/
-│
-├── logs/
-│   └── fraud_realtime.log
-│
+├── venv/
+├── .gitignore
 └── README.md
 ```
 
@@ -131,54 +104,22 @@ source venv/bin/activate
 
 ---
 
-## 2️⃣ Jalankan Kafka
-
-### Terminal 1 (Zookeeper)
+## 2️⃣ Jalankan Engine (Spark)
 
 ```
-cd kafka_2.13-3.5.1
-bin/zookeeper-server-start.sh config/zookeeper.properties
+python3 main_uts_230104040059.py
 ```
 
-### Terminal 2 (Kafka Server)
+Output:
 
-```
-cd kafka_2.13-3.5.1
-bin/kafka-server-start.sh config/server.properties
-```
-
-### Terminal 3 (Create Topic)
-
-```
-bin/kafka-topics.sh --create \
---topic bank_topic \
---bootstrap-server localhost:9092 \
---partitions 1 \
---replication-factor 1
-```
+* Data Parquet akan tersimpan di folder `output/`
 
 ---
 
-## 3️⃣ Jalankan Sistem
-
-### Terminal 1 (Producer)
+## 3️⃣ Jalankan Dashboard
 
 ```
-python3 scripts/kafka_producer_bank.py
-```
-
-### Terminal 2 (Spark Streaming)
-
-```
-spark-submit \
---packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.1 \
-scripts/spark_streaming_fraud_v2.py
-```
-
-### Terminal 3 (Dashboard)
-
-```
-streamlit run dashboard/fraud_dashboard_v2.py
+streamlit run dashboard_230104040059.py
 ```
 
 ---
@@ -197,47 +138,48 @@ http://localhost:8501
 
 Sistem menghasilkan:
 
-* Data transaksi real-time
-* Status fraud (FRAUD / NORMAL)
-* File output dalam format Parquet
-* Dashboard visualisasi:
+* Total kendaraan (semua lokasi)
+* Total kendaraan per lokasi (AreaA, AreaB, AreaC)
+* Grafik tren kendaraan berdasarkan waktu
+* Prediksi jumlah kendaraan berdasarkan jam
 
-  * Total transaksi
-  * Total fraud
-  * Tabel data
-  * Grafik distribusi
+Contoh hasil:
+
+* Total kendaraan: **17.294**
+* AreaB: **5.939**
+* Prediksi jam 08.00: **58 kendaraan**
 
 ---
 
 # 📸 Output Wajib
 
-* Script Python
-* Folder `stream_data/realtime_output`
+* Script Python:
+
+  * main_uts_NIM.py
+  * dashboard_NIM.py
 * Screenshot:
 
-  * Kafka berjalan
-  * Spark berjalan
-  * Dashboard tampil
+  * Terminal saat Parquet berhasil disimpan
+  * Dashboard Streamlit (full tampilan)
+
+---
+
+# 📈 Analisis
+
+Berdasarkan hasil dashboard, kepadatan kendaraan mengalami peningkatan pada pagi hari dan mencapai puncaknya pada sekitar pukul **08.00–08.10**. Hal ini menunjukkan bahwa waktu tersebut merupakan **jam tersibuk (peak hour)**, terutama pada AreaB dan AreaC. Model prediksi juga menunjukkan hasil yang konsisten dengan kondisi tersebut.
 
 ---
 
 # 🎯 Kesimpulan
 
-Praktikum ini berhasil mengimplementasikan sistem **Real-Time Fraud Detection** berbasis Big Data dengan memanfaatkan Kafka, Spark, dan Streamlit.
+Praktikum ini berhasil membangun sistem monitoring dan prediksi kepadatan kendaraan berbasis Big Data menggunakan Apache Spark, Parquet, dan Streamlit. Sistem mampu mengolah data secara efisien, menampilkan visualisasi interaktif, serta melakukan prediksi menggunakan Linear Regression.
 
-Pipeline yang dibangun mampu:
-
-* Mengolah data secara real-time
-* Mengamankan data sensitif melalui masking dan enkripsi
-* Mendeteksi fraud secara cepat
-* Menampilkan hasil secara interaktif
-
-Sistem ini menunjukkan bahwa dalam Big Data, **kecepatan dan keamanan merupakan dua aspek utama yang tidak dapat dipisahkan**.
+Hasil analisis menunjukkan bahwa puncak kepadatan kendaraan terjadi pada pagi hari, sehingga sistem ini dapat digunakan sebagai dasar dalam pengembangan Smart City berbasis data.
 
 ---
 
 # 📦 Repository
 
 ```
-https://github.com/Siti-Magfiratun-Warahmah/Big-Data-Praktikum08-Siti-Magfiratun-Warahmah-230104040059
+https://github.com/Siti-Magfiratun-Warahmah/Big-Data-Praktikum09-Siti-Magfiratun-Warahmah-230104040059
 ```
